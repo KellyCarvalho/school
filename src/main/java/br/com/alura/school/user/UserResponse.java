@@ -18,14 +18,13 @@ public class UserResponse {
     @JsonProperty
     private Set<Course> courses = new HashSet<>();
     
-    @JsonProperty
-    private Integer quantidade_matriculas;
+   
     
 
     public UserResponse(User user) {
         this.username = user.getUsername();
         this.email = user.getEmail();
-        this.quantidade_matriculas=user.getEnrolls();
+  
     }
     
    

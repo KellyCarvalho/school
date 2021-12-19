@@ -1,15 +1,12 @@
 package br.com.alura.school.user;
 
-import br.com.alura.school.course.Course;
-import br.com.alura.school.support.validation.Unique;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import br.com.alura.school.support.validation.Unique;
 
 
 public class NewUserRequest {
@@ -26,22 +23,27 @@ public class NewUserRequest {
     @JsonProperty
     private final String email;
     
-    private Set<Course> enrolls = new HashSet<>();
+	private final Integer quantityCourses;
+    
+   
 
-    NewUserRequest(String username, String email) {
+    NewUserRequest(String username, String email, Integer quantityCourses) {
         this.username = username;
         this.email = email;
+        this.quantityCourses=quantityCourses;
     }
     
     NewUserRequest(String username) {
         this.username = username;
 		this.email = this.getUsername();
+	     this.quantityCourses=this.getQuantityCourses();
       
     }
     
     public NewUserRequest(User user) {
       this.username=user.getUsername();
       this.email=user.getEmail();
+      this.quantityCourses=user.getEnrolls();
       
     }
     
@@ -57,8 +59,13 @@ public class NewUserRequest {
         return new User(username, email);
     }
 
-	public Set<Course> getEnrolls() {
-		return enrolls;
+	public Integer getQuantityCourses() {
+		return quantityCourses;
 	}
+
+	
+
+
+	
   
 }

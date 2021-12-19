@@ -77,12 +77,6 @@ public class Course {
 		this.enrolls = users;
 	}
 
-	public Integer getQuantityEnrolls() {
-		return quantityEnrolls;
-	}
 
-	public void setQuantityEnrolls(Integer quantityEnrolls) {
-		this.quantityEnrolls = quantityEnrolls;
-	}
 
 }

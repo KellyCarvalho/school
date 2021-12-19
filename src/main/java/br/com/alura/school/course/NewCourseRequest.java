@@ -6,6 +6,7 @@ import br.com.alura.school.user.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
@@ -28,7 +29,7 @@ public class NewCourseRequest {
     @JsonProperty
     private final String description;
     
-	private Integer quantityEnrolls;
+
     
     private Set<User> users = new HashSet<>();
 
@@ -59,4 +60,8 @@ public class NewCourseRequest {
     	
     	
     }
+ 
+
+    
+
 }

@@ -5,8 +5,11 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -101,36 +104,43 @@ public class CourseController {
     	
     }
     @GetMapping("/courses/enroll/report")
-    List<User> enrollReport(Pageable pageable){
+    List enrollReport(){
     
     	
     	
-    Page<Course> course = courseRepository.findAll(pageable);
-    
-    
-   List<User> users =  userRepository.findAll();
-   List<Integer> enrolls = new ArrayList<>();
+    	List<Course>   courses=  courseRepository.findAll();
+    	List<User> users =  userRepository.findAll();
+        
+        
    
-   for (User user : users) {
-	//enrolls.add(user.getEnrolls(user.getCourses())) ;
-	 user.setEnrolls(user.getCourses());
-	 userRepository.save(user);
-	System.out.println(user.getEmail());
-	System.out.println(user.getEnrolls());
+    	   List<NewUserRequest> enrrols = new ArrayList<>();
+    	   
+   for (User newUserRequest : users) {
+	   
+	  
+	   newUserRequest.setEnrolls(newUserRequest.getCourses());
+	   if(newUserRequest.getEnrolls()!=0) {
+		   enrrols.add(new NewUserRequest(newUserRequest));
+		   userRepository.save(newUserRequest);
+		    	
+	   }
+
+	   
+	   
+	
 }
-   
-   
-   for (Integer x : enrolls) {
-		System.out.println(x);
-	     
-	}
+    	
+    	   
+    	   
+    	
+
+    	   
+		return enrrols;
+    	  
     
- 
+
    
-    	
-    	
-		return users;
-    	
+   
     
     	
     	
