@@ -81,16 +81,7 @@ public class CourseController {
     	if(user!=null&&!course.getUsers().contains(user)) {
     		course.getUsers().add(user);
     		 
-    		   
-    
-    		  
-    		
-    	
-
-    		
-    		
-   
-        	courseRepository.save(course);
+    		courseRepository.save(course);
         	 System.out.println(user.getQuantityCourses());
     	}else {
     		System.out.println("User exist Alredy");
