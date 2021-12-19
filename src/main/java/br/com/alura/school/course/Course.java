@@ -1,16 +1,30 @@
 package br.com.alura.school.course;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import static javax.persistence.GenerationType.IDENTITY;
+import br.com.alura.school.user.User;
 
 @Entity
-class Course {
+
+public class Course {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -27,6 +41,11 @@ class Course {
     private String name;
 
     private String description;
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+   
+    @JoinTable(name="tb_user_course", joinColumns = @JoinColumn(name ="user_id"),inverseJoinColumns =@JoinColumn(name="course_id"))
+    private Set<User> users = new HashSet<>();
 
     
     
@@ -50,5 +69,13 @@ class Course {
     String getDescription() {
         return description;
     }
+
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
 
 }

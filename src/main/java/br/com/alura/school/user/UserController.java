@@ -11,7 +11,7 @@ import static java.lang.String.format;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
-class UserController {
+public class UserController {
 
     private final UserRepository userRepository;
 
