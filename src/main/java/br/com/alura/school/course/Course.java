@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -21,7 +22,7 @@ import javax.validation.constraints.Size;
 import br.com.alura.school.user.User;
 
 @Entity
-
+@Table(name="Course")
 public class Course {
 
 	@Id
@@ -40,11 +41,11 @@ public class Course {
 
 	private String description;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@GeneratedValue(strategy = GenerationType.TABLE, generator = "tb_user_course")
-	@TableGenerator(name = "tb_user_course", table = "GENERATOR_TABLE", pkColumnName = "key", valueColumnName = "next", pkColumnValue = "course", allocationSize = 30)
-	@JoinTable(name = "tb_user_course", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
-	Set<User> users = new HashSet<>();
+	@ManyToMany
+	@JoinTable(name = "tb_user_course", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	Set<User> enrolls = new HashSet<>();
+	
+	private Integer quantityEnrolls;
 
 	@Deprecated
 	protected Course() {
@@ -69,11 +70,19 @@ public class Course {
 	}
 
 	public Set<User> getUsers() {
-		return users;
+		return enrolls;
 	}
 
 	public void setUsers(Set<User> users) {
-		this.users = users;
+		this.enrolls = users;
+	}
+
+	public Integer getQuantityEnrolls() {
+		return quantityEnrolls;
+	}
+
+	public void setQuantityEnrolls(Integer quantityEnrolls) {
+		this.quantityEnrolls = quantityEnrolls;
 	}
 
 }

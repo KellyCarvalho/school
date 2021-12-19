@@ -28,6 +28,8 @@ public class NewCourseRequest {
     @JsonProperty
     private final String description;
     
+	private Integer quantityEnrolls;
+    
     private Set<User> users = new HashSet<>();
 
     public NewCourseRequest(String code, String name, String description) {

@@ -4,6 +4,9 @@ import static java.lang.String.format;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -20,6 +23,7 @@ import org.springframework.web.server.ResponseStatusException;
 import br.com.alura.school.user.NewUserRequest;
 import br.com.alura.school.user.User;
 import br.com.alura.school.user.UserRepository;
+import br.com.alura.school.user.UserResponse;
 
 @RestController
 public class CourseController {
@@ -38,20 +42,10 @@ public class CourseController {
     Page<CourseResponse>allCourses(Pageable pageable){
     	
     	Page<Course> list= courseRepository.findAll(pageable);
+    	
     	return list.map(x-> new CourseResponse(x));
 	
-
-  
-  	
-
-  	
-
-    	
-    
-
-
-	
-    }
+ }
 
     @GetMapping("/courses/{code}")
     ResponseEntity<CourseResponse> courseByCode(@PathVariable("code") String code) {
@@ -77,18 +71,27 @@ public class CourseController {
     	
     	User user = userRepository.findByUsername(userName).orElseThrow(() -> new ResponseStatusException(NOT_FOUND, format("User with username %s not found", courseCode)));
     	
-   
+    	 List<User> users =  userRepository.findAll();
+    	
     	
     	if(user!=null&&!course.getUsers().contains(user)) {
     		course.getUsers().add(user);
-        	
+    		
+    		
+    		
+    		
+    		
         	courseRepository.save(course);
         
     	}else {
-    		System.out.println("Usuário já existe");
+    		System.out.println("User exist Alredy");
+    		//implementar tratamento de exceção
     	}
     	
-    	
+
+		   
+
+		
     
  	   URI location = URI.create(format("/courses/%s", course.getCode()));
     	
@@ -96,16 +99,66 @@ public class CourseController {
     	
     	
     	
+    }
+    @GetMapping("/courses/enroll/report")
+    List<User> enrollReport(Pageable pageable){
+    
     	
     	
+    Page<Course> course = courseRepository.findAll(pageable);
+    
+    
+   List<User> users =  userRepository.findAll();
+   List<Integer> enrolls = new ArrayList<>();
+   
+   for (User user : users) {
+	//enrolls.add(user.getEnrolls(user.getCourses())) ;
+	 user.setEnrolls(user.getCourses());
+	 userRepository.save(user);
+	System.out.println(user.getEmail());
+	System.out.println(user.getEnrolls());
+}
+   
+   
+   for (Integer x : enrolls) {
+		System.out.println(x);
+	     
+	}
+    
+ 
+   
     	
     	
+		return users;
     	
-    	
-    	
-    	
-    	
+    
     	
     	
     }
+     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

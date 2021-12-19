@@ -31,5 +31,7 @@ public class UserController {
         URI location = URI.create(format("/users/%s", newUserRequest.getUsername()));
         return ResponseEntity.created(location).build();
     }
+    
+    
 
 }

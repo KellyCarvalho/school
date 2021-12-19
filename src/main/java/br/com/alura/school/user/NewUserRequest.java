@@ -1,7 +1,11 @@
 package br.com.alura.school.user;
 
+import br.com.alura.school.course.Course;
 import br.com.alura.school.support.validation.Unique;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -21,6 +25,8 @@ public class NewUserRequest {
     @Email
     @JsonProperty
     private final String email;
+    
+    private Set<Course> enrolls = new HashSet<>();
 
     NewUserRequest(String username, String email) {
         this.username = username;
@@ -29,11 +35,11 @@ public class NewUserRequest {
     
     NewUserRequest(String username) {
         this.username = username;
-		this.email = "";
+		this.email = this.getUsername();
       
     }
     
-    NewUserRequest(User user) {
+    public NewUserRequest(User user) {
       this.username=user.getUsername();
       this.email=user.getEmail();
       
@@ -50,5 +56,9 @@ public class NewUserRequest {
     User toEntity() {
         return new User(username, email);
     }
+
+	public Set<Course> getEnrolls() {
+		return enrolls;
+	}
   
 }
