@@ -33,6 +33,12 @@ public class NewUserRequest {
       
     }
     
+    NewUserRequest(User user) {
+      this.username=user.getUsername();
+      this.email=user.getEmail();
+      
+    }
+    
     
 
 

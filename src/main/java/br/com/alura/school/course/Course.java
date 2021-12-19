@@ -43,7 +43,15 @@ public class Course {
     private String description;
     
     @ManyToMany(fetch = FetchType.EAGER)
-   
+    @GeneratedValue(strategy=GenerationType.TABLE, generator="tb_user_course")
+    @TableGenerator(
+            name="tb_user_course",
+            table="GENERATOR_TABLE",
+            pkColumnName = "key",
+            valueColumnName = "next",
+            pkColumnValue="course",
+            allocationSize=30
+        )
     @JoinTable(name="tb_user_course", joinColumns = @JoinColumn(name ="user_id"),inverseJoinColumns =@JoinColumn(name="course_id"))
     private Set<User> users = new HashSet<>();
 

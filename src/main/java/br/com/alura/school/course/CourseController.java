@@ -4,6 +4,8 @@ import static java.lang.String.format;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -34,8 +36,21 @@ public class CourseController {
     }
 
     @GetMapping("/courses")
-    ResponseEntity<List<CourseResponse>> allCourses() {
-        return ResponseEntity.ok().build();
+    ResponseEntity<List<Course>> allCourses() {
+    	
+  	
+  	List<Course> course =courseRepository.findAll();
+  
+  	
+  
+  	
+
+    	
+    
+
+
+		return  ResponseEntity.ok().body(course);
+
     }
 
     @GetMapping("/courses/{code}")
@@ -50,7 +65,7 @@ public class CourseController {
         URI location = URI.create(format("/courses/%s", newCourseRequest.getCode()));
         return ResponseEntity.created(location).build();
     }
-    
+   
     @PostMapping("/courses/{courseCode}/enroll")
     ResponseEntity<Void> enroll(@PathVariable("courseCode") String courseCode, @RequestBody NewUserRequest newUserRequest){
     	Course course =  courseRepository.findByCode(courseCode).orElseThrow(() -> new ResponseStatusException(NOT_FOUND, format("Course with code %s not found", courseCode)));
@@ -62,10 +77,21 @@ public class CourseController {
     	
     	User user = userRepository.findByUsername(userName).orElseThrow(() -> new ResponseStatusException(NOT_FOUND, format("User with username %s not found", courseCode)));
     	
-    	course.getUsers().add(user);
+   
     	
-    	courseRepository.save(course);
-    	   URI location = URI.create(format("/courses/%s", course.getCode()));
+    	if(user!=null&&!course.getUsers().contains(user)) {
+    		course.getUsers().add(user);
+        	
+        	courseRepository.save(course);
+        
+    	}else {
+    		System.out.println("Usuário já existe");
+    	}
+    	
+    	
+    
+ 	   URI location = URI.create(format("/courses/%s", course.getCode()));
+    	
     	  return ResponseEntity.created(location).build();
     	
     	
