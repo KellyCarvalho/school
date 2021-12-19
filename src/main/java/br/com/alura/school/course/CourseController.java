@@ -4,12 +4,11 @@ import static java.lang.String.format;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,21 +35,22 @@ public class CourseController {
     }
 
     @GetMapping("/courses")
-    ResponseEntity<List<Course>> allCourses() {
+    Page<CourseResponse>allCourses(Pageable pageable){
     	
-  	
-  	List<Course> course =courseRepository.findAll();
+    	Page<Course> list= courseRepository.findAll(pageable);
+    	return list.map(x-> new CourseResponse(x));
+	
+
   
   	
-  
+
   	
 
     	
     
 
 
-		return  ResponseEntity.ok().body(course);
-
+	
     }
 
     @GetMapping("/courses/{code}")
