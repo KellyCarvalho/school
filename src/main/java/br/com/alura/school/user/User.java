@@ -59,6 +59,7 @@ public class User implements Serializable{
 
 
 
+
 	@Deprecated
     protected User() {}
 
@@ -110,10 +111,19 @@ public class User implements Serializable{
 		return this.quantityCourses;
 		}
 
-	public void setEnrolls(Set<Course> courses) {
+	/*public void setEnrolls(Set<Course> courses) {
 		this.quantityCourses = courses.size();
+	}*/
+	
+	
+
+	public Integer getQuantityCourses() {
+		return quantityCourses;
 	}
 
+	public void setQuantityCourses(Integer quantityCourses) {
+		this.quantityCourses = quantityCourses;
+	}
 
     
 

@@ -75,25 +75,30 @@ public class CourseController {
     	User user = userRepository.findByUsername(userName).orElseThrow(() -> new ResponseStatusException(NOT_FOUND, format("User with username %s not found", courseCode)));
     	
     	 List<User> users =  userRepository.findAll();
+    	 List<NewUserRequest> userRequests = new ArrayList<>();
     	
     	
     	if(user!=null&&!course.getUsers().contains(user)) {
     		course.getUsers().add(user);
+    		 
+    		   
+    
+    		  
+    		
+    	
+
     		
     		
-    		
-    		
-    		
+   
         	courseRepository.save(course);
-        
+        	 System.out.println(user.getQuantityCourses());
     	}else {
     		System.out.println("User exist Alredy");
     		//implementar tratamento de exceção
     	}
     	
 
-		   
-
+		  
 		
     
  	   URI location = URI.create(format("/courses/%s", course.getCode()));
@@ -103,45 +108,21 @@ public class CourseController {
     	
     	
     }
-    @GetMapping("/courses/enroll/report")
-    List enrollReport(){
+  @GetMapping("/courses/enroll/report")
+    ResponseEntity<List<CourseEnrollResponse>> enrollReport(){
     
     	
+    	List<CourseEnrollResponse> courseEnrollResponses = new ArrayList<>();
+    	List<User>   users=  userRepository.findAll();
     	
-    	List<Course>   courses=  courseRepository.findAll();
-    	List<User> users =  userRepository.findAll();
-        
-        
-   
-    	   List<NewUserRequest> enrrols = new ArrayList<>();
-    	   
-   for (User newUserRequest : users) {
-	   
-	  
-	   newUserRequest.setEnrolls(newUserRequest.getCourses());
-	   if(newUserRequest.getEnrolls()!=0) {
-		   enrrols.add(new NewUserRequest(newUserRequest));
-		   userRepository.save(newUserRequest);
-		    	
-	   }
-
-	   
-	   
-	
-}
     	
-    	   
-    	   
-    	
-
-    	   
-		return enrrols;
-    	  
-    
+    	for (User user : users) {
+    		courseEnrollResponses.add(new CourseEnrollResponse(user.getEmail(),user.getCourses().size()));
+    		
+		}
 
    
-   
-    
+  return  ResponseEntity.ok().body(courseEnrollResponses);
     	
     	
     }
