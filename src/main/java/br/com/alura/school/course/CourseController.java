@@ -37,11 +37,16 @@ public class CourseController {
     }
 
     @GetMapping("/courses")
-    ResponseEntity<List<Course>> allCourses(){
+    List<CourseResponse> allCourses(){
     	
+    	List<CourseResponse> courseResponses = new ArrayList<>();
     	List<Course> list= courseRepository.findAll();
     	
-    	return ResponseEntity.ok().body(list);
+    	for (Course course : list) {
+    		courseResponses.add(new CourseResponse(course));
+		}
+    	
+    	return courseResponses;
 	
  }
 

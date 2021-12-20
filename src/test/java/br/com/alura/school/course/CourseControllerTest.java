@@ -71,7 +71,7 @@ class CourseControllerTest {
     }
     
     @Test
-    void should_not_allow_enroll_Empty() throws Exception{
+    void should_retrive_no_content_when_does_not_exist_enrolls() throws Exception{
     	
        
     	mockMvc.perform(get("/courses/enroll/report")

@@ -12,14 +12,14 @@ import br.com.alura.school.support.validation.Unique;
 public class NewUserRequest {
 
     @Unique(entity = User.class, field = "username")
-    @Size(max=20)
-    @NotBlank
+    @Size(max=20,message="Maximum characters is 20")
+    @NotBlank(message="Username is Required!")
     @JsonProperty
     private final String username;
 
     @Unique(entity = User.class, field = "email")
-    @NotBlank
-    @Email
+    @NotBlank(message="Email is Required!")
+    @Email(message="Email should be valid")
     @JsonProperty
     private final String email;
     
