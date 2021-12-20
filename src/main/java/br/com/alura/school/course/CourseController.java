@@ -5,11 +5,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -26,7 +22,6 @@ import org.springframework.web.server.ResponseStatusException;
 import br.com.alura.school.user.NewUserRequest;
 import br.com.alura.school.user.User;
 import br.com.alura.school.user.UserRepository;
-import br.com.alura.school.user.UserResponse;
 
 @RestController
 public class CourseController {
@@ -84,8 +79,7 @@ public class CourseController {
     		courseRepository.save(course);
         	
     	}else {
-    		System.out.println("User exist Alredy");
-    		//implementar tratamento de exceção
+    		return ResponseEntity.badRequest().build();
     	}
     	
 
@@ -108,10 +102,9 @@ public class CourseController {
     	
     	
     	for (User user : users) {
-    		user.setQuantityCourses(user.getCourses().size());
-    		userRepository.save(user);
-    		 System.out.println(user.getQuantityCourses());
-    		System.out.println(user.getCourses().size());
+    		
+    		
+    		
     		
     		if(user.getCourses().size()>0) {
     			courseEnrollResponses.add(new CourseEnrollResponse(user.getEmail(),user.getCourses().size()));

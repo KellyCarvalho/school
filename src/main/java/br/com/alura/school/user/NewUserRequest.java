@@ -23,14 +23,14 @@ public class NewUserRequest {
     @JsonProperty
     private final String email;
     
-	private final Integer quantityCourses;
+	private  Integer quantityCourses;
     
    
 
-    NewUserRequest(String username, String email, Integer quantityCourses) {
+    NewUserRequest(String username, String email) {
         this.username = username;
         this.email = email;
-        this.quantityCourses=quantityCourses;
+      
     }
     
     NewUserRequest(String username) {
@@ -43,7 +43,7 @@ public class NewUserRequest {
     public NewUserRequest(User user) {
       this.username=user.getUsername();
       this.email=user.getEmail();
-      this.quantityCourses=user.getEnrolls();
+      //this.quantityCourses=user.getEnrolls();
       
     }
     

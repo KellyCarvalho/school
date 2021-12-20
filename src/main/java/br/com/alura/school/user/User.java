@@ -26,7 +26,7 @@ import java.util.Set;
 
 @Entity
 
-@Table(name="User")
+
 public class User implements Serializable{
 
    
@@ -51,7 +51,7 @@ public class User implements Serializable{
     @ManyToMany(mappedBy = "enrolls")
     private Set<Course> courses = new HashSet<>();
     
-    private Integer quantityCourses;
+   
     
     
     
@@ -107,23 +107,6 @@ public class User implements Serializable{
 		return "User [courses=" + courses + "]";
 	}
 
-	public Integer getEnrolls() {
-		return this.quantityCourses;
-		}
-
-	/*public void setEnrolls(Set<Course> courses) {
-		this.quantityCourses = courses.size();
-	}*/
-	
-	
-
-	public Integer getQuantityCourses() {
-		return quantityCourses;
-	}
-
-	public void setQuantityCourses(Integer quantityCourses) {
-		this.quantityCourses = quantityCourses;
-	}
 
     
 

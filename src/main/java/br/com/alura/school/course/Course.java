@@ -22,7 +22,6 @@ import javax.validation.constraints.Size;
 import br.com.alura.school.user.User;
 
 @Entity
-@Table(name="Course")
 public class Course {
 
 	@Id
@@ -45,7 +44,7 @@ public class Course {
 	@JoinTable(name = "tb_user_course", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	Set<User> enrolls = new HashSet<>();
 	
-	private Integer quantityEnrolls;
+	
 
 	@Deprecated
 	protected Course() {
