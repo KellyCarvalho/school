@@ -3,6 +3,7 @@ package br.com.alura.school.course;
 import br.com.alura.school.support.validation.Unique;
 import br.com.alura.school.user.User;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.HashSet;
@@ -30,9 +31,11 @@ public class NewCourseRequest {
     private final String description;
     
 
-    
+    @JsonProperty
     private Set<User> users = new HashSet<>();
-
+    
+   
+   
     public NewCourseRequest(String code, String name, String description) {
         this.code = code;
         this.name = name;
@@ -46,7 +49,16 @@ public class NewCourseRequest {
     	
     }
     
-    public String getCode() {
+    @Deprecated
+    @JsonIgnoreProperties
+    public NewCourseRequest() {
+		this.code = "";
+		this.name = "";
+		this.description = "";
+    	
+	}
+
+	public String getCode() {
         return code;
     }
 
