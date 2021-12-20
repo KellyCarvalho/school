@@ -75,14 +75,14 @@ public class CourseController {
     	User user = userRepository.findByUsername(userName).orElseThrow(() -> new ResponseStatusException(NOT_FOUND, format("User with username %s not found", courseCode)));
     	
     	 List<User> users =  userRepository.findAll();
-    	 List<NewUserRequest> userRequests = new ArrayList<>();
+    
     	
     	
     	if(user!=null&&!course.getUsers().contains(user)) {
     		course.getUsers().add(user);
     		 
     		courseRepository.save(course);
-        	 System.out.println(user.getQuantityCourses());
+        	
     	}else {
     		System.out.println("User exist Alredy");
     		//implementar tratamento de exceção
@@ -101,16 +101,28 @@ public class CourseController {
     }
   @GetMapping("/courses/enroll/report")
     ResponseEntity<List<CourseEnrollResponse>> enrollReport(){
-    
+	 
     	
     	List<CourseEnrollResponse> courseEnrollResponses = new ArrayList<>();
     	List<User>   users=  userRepository.findAll();
     	
     	
     	for (User user : users) {
-    		courseEnrollResponses.add(new CourseEnrollResponse(user.getEmail(),user.getCourses().size()));
+    		user.setQuantityCourses(user.getCourses().size());
+    		userRepository.save(user);
+    		 System.out.println(user.getQuantityCourses());
+    		System.out.println(user.getCourses().size());
+    		
+    		if(user.getCourses().size()>0) {
+    			courseEnrollResponses.add(new CourseEnrollResponse(user.getEmail(),user.getCourses().size()));
+    		}
+
     		
 		}
+    	
+    	if(courseEnrollResponses.size()==0) {
+    		 return  ResponseEntity.noContent().build();
+    	}
 
    
   return  ResponseEntity.ok().body(courseEnrollResponses);
