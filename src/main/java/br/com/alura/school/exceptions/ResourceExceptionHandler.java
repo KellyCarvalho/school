@@ -28,7 +28,7 @@ public class ResourceExceptionHandler {
 	
 	@ExceptionHandler(DatabaseException.class)
 	public ResponseEntity<StandardError> database(DatabaseException e,HttpServletRequest request ){
-		HttpStatus status = HttpStatus.BAD_REQUEST;
+		HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());
 		err.setStatus(status.value());
@@ -40,7 +40,7 @@ public class ResourceExceptionHandler {
 
 	 @ExceptionHandler(MethodArgumentNotValidException.class)
 	 public ResponseEntity<ValidationError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
-			HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+			HttpStatus status = HttpStatus.BAD_REQUEST;
 			ValidationError err = new ValidationError();
 			err.setTimestamp(Instant.now());
 			err.setStatus(status.value());
@@ -56,5 +56,19 @@ public class ResourceExceptionHandler {
 		
 			return ResponseEntity.status(status).body(err);
 		}
+	 
+	 @ExceptionHandler(BadRequestException.class)
+		public ResponseEntity<StandardError> database(BadRequestException e,HttpServletRequest request ){
+			HttpStatus status = HttpStatus.BAD_REQUEST;
+			StandardError err = new StandardError();
+			err.setTimestamp(Instant.now());
+			err.setStatus(status.value());
+			err.setError("Database exception");
+			err.setMessage(e.getMessage());
+			err.setPath(request.getRequestURI());
+			return ResponseEntity.status(status).body(err);
+		}
+
+
 	}
 

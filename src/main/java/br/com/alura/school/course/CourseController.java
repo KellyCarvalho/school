@@ -37,11 +37,11 @@ public class CourseController {
     }
 
     @GetMapping("/courses")
-    Page<CourseResponse>allCourses(Pageable pageable){
+    ResponseEntity<List<Course>> allCourses(){
     	
-    	Page<Course> list= courseRepository.findAll(pageable);
+    	List<Course> list= courseRepository.findAll();
     	
-    	return list.map(x-> new CourseResponse(x));
+    	return ResponseEntity.ok().body(list);
 	
  }
 
