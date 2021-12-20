@@ -67,9 +67,9 @@ public class CourseController {
     	
     	String userName = newUserRequest.getUsername();
     	
-    	User user = userRepository.findByUsername(userName).orElseThrow(() -> new ResponseStatusException(NOT_FOUND, format("User with username %s not found", courseCode)));
+    	User user = userRepository.findByUsername(userName).orElseThrow(() -> new ResponseStatusException(NOT_FOUND, format("User with username %s not found", newUserRequest.getUsername())));
     	
-    	 List<User> users =  userRepository.findAll();
+    	// List<User> users =  userRepository.findAll();
     
     	
     	

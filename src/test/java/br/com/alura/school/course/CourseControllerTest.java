@@ -44,7 +44,7 @@ class CourseControllerTest {
     void should_retrieve_all_courses() throws Exception {
         courseRepository.save(new Course("spring-1", "Spring Basics", "Spring Core and Spring MVC."));
         courseRepository.save(new Course("spring-2", "Spring Boot", "Spring Boot"));
-
+		
         mockMvc.perform(get("/courses")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -56,6 +56,7 @@ class CourseControllerTest {
                 .andExpect(jsonPath("$[1].code", is("spring-2")))
                 .andExpect(jsonPath("$[1].name", is("Spring Boot")))
                 .andExpect(jsonPath("$[1].shortDescription", is("Spring Boot")));
+        		
     }
 
     @Test
@@ -67,6 +68,17 @@ class CourseControllerTest {
                 .content(jsonMapper.writeValueAsString(newCourseRequest)))
                 .andExpect(status().isCreated())
                 .andExpect(header().string("Location", "/courses/java-2"));
+    }
+    
+    @Test
+    void should_not_allow_enroll_Empty() throws Exception{
+    	
+       
+    	mockMvc.perform(get("/courses/enroll/report")
+    					     .contentType(MediaType.APPLICATION_JSON))
+    					     .andExpect(status().isNoContent());
+    					      
+    					    
     }
 
 }

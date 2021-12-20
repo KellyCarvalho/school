@@ -16,17 +16,20 @@ import javax.validation.constraints.Size;
 public class NewCourseRequest {
 
     @Unique(entity = Course.class, field = "code")
-    @Size(max=10)
-    @NotBlank
+    @Size(max=10,message="Maximum characters is 10")
+    @NotBlank(message="Course code is required!")
     @JsonProperty
     private final String code;
 
     @Unique(entity = Course.class, field = "name")
-    @Size(max=20)
-    @NotBlank
+    @Size(max=20,message="Maximum characters is 20")
+    @NotBlank(message="Field can't be brank")
     @JsonProperty
     private final String name;
 
+    @Unique(entity = Course.class, field = "name")
+    @Size(max=50,message="Maximum characters is 50")
+    @NotBlank(message="Field can't be brank")
     @JsonProperty
     private final String description;
     
